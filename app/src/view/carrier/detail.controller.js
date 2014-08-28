@@ -1,10 +1,10 @@
 /**
  * Controller - Home
  * --------------------
- * This is the controller for the home view
+ * This is the controller for the carrier detail view
  *
  */
-sap.ui.controller( 'view.home', {
+sap.ui.controller( 'view.carrier.detail', {
     /**
      * Called when a controller is instantiated and its View controls (if available) are already created.
      * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
@@ -30,5 +30,26 @@ sap.ui.controller( 'view.home', {
      * (NOT before the first rendering! onInit() is used for that one!).
      */
     onBeforeRendering: function(){
+    },
+
+    /**
+     * Set context binding.
+     * @param oContext
+     */
+    setBindingContext: function( oContext ){
+        // Get carrier detail form
+        var oSimpleForm = sap.ui.getCore().byId( 'carrier.detail.form' );
+
+        // Set binding context
+        oSimpleForm.setBindingContext( oContext );
+    },
+
+    /**
+     * Navigate back to the carrier overview.
+     */
+    navigateToOverview: function() {
+        // Navigate back to the carrier overview
+        var oNavCon = sap.ui.getCore().byId( 'navContainerControl' );
+        oNavCon.back();
     }
 } );

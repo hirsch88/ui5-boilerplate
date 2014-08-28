@@ -4,10 +4,9 @@
 sap.ui.localResources( 'view' );
 sap.ui.localResources( 'util' );
 
-jQuery.sap.registerModulePath( 'view', 'src/view' );
-jQuery.sap.registerModulePath( 'util', 'src/util' );
-
-
+jQuery.sap.registerModulePath( 'view', './view' );
+jQuery.sap.registerModulePath( 'util', './util' );
+jQuery.sap.registerModulePath( 'model', './model' );
 
 /**
  * Application
@@ -21,17 +20,28 @@ jQuery.sap.registerModulePath( 'util', 'src/util' );
 jQuery.sap.declare( 'Application' );
 jQuery.sap.require( 'sap.ui.app.Application' );
 
+// Model requirements
+jQuery.sap.require( 'model.sflight' );
+
 sap.ui.app.Application.extend( 'Application', {
     init: function(){
+        //load the sflight OData model
+        var oODataSflightModel = model.sflight.getModel();
+        sap.ui.getCore().setModel( oODataSflightModel, 'sflight' );
 
-
+        // Load language properties
+        var i18n = new sap.ui.model.resource.ResourceModel( {
+            bundleUrl: 'i18n/i18n.properties',
+            locale: 'de'
+        } );
+        sap.ui.getCore().setModel( i18n, 'i18n' );
     },
     /**
      * Defines your home/main view for your spa(single-page-application)
      */
     main: function(){
         var root = this.getRoot();
-        var oView = new sap.ui.jsview( 'view.home', 'view.home' );
+        var oView = new sap.ui.jsview( 'view.main', 'view.main' );
         oView.placeAt( root );
 
     }
